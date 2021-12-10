@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Board">
+	<select id="pagingList1" parameterType="java.util.HashMap" resultType="board">
+		select * from board_table order by b_number desc limit #{start}, #{limit}
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(b_number) from board_table
+	</select>
+	
+	<select id="findAll" resultType="board">
+ 		select * from board_table
+ 	</select>
+ 	
+ 	 <insert id="save" parameterType="board">
+ 		insert into board_table(b_title, b_writer, b_contents,b_hits,b_date,b_filename) 
+ 		values(#{b_title},#{b_writer},#{b_contents},0,now(),#{b_filename})
+ 	</insert>
+ 	
+ 	<select id="view" parameterType="long" resultType="board">
+ 		select * from board_table where b_number=#{b_number}
+ 	</select>
+ 	
+ 	 <select id="hits" parameterType="long" >
+ 		update board_table set b_hits=(b_hits+1) where b_number=#{b_number}
+ 	</select>
+ 	
+ 	<select id="delete" parameterType="long" >
+		delete from board_table where b_number=#{b_number}
+	</select>
+	
+	<select id="update" parameterType="board" >
+ 		update board_table set b_title=#{b_title},b_contents=#{b_contents}, b_filename=#{b_filename},b_date=now() where b_number=#{b_number}
+ 	</select>
+ 	
+ 	<select id="memberList" resultType="member">
+ 		select * from member_table
+ 	</select>
+ 	
+ 	 <select id="memberDelete" parameterType="long" >
+		delete from member_table where m_number=#{m_number}
+	</select>
+	
+	<select id="search" parameterType="java.util.HashMap" resultType="board">
+		select * from board_table where ${type} like CONCAT('%', #{word}, '%')	
+	</select>
+	
+	<select id="commentView" parameterType="long" resultType="comment">
+		select * from comment_table where b_number=#{b_number}
+	</select>
+	
+	
+</mapper>
