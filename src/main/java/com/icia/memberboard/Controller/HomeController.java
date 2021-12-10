@@ -75,13 +75,13 @@ public class HomeController {
 			return "login";
 		else if (loginmember.getM_id().equals("admin")) {
 			session.setAttribute("loginID", loginmember.getM_id());
-			//session.setAttribute("loginPW", loginmember.getM_password());
+			session.setAttribute("loginPW", loginmember.getM_password());
 			return "board/admin";
 		}
 		else { 
 			
 			session.setAttribute("loginID", loginmember.getM_id());
-			//session.setAttribute("loginPW", loginmember.getM_password());
+			session.setAttribute("loginPW", loginmember.getM_password());
 			return "redirect:board/paging?page="+1+ "&id="+loginmember.getM_id();
 			
 		}
